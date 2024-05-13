@@ -1,0 +1,17 @@
+# 忽略 IDE 配置文件
+.vscode/
+.idea/
+
+# 忽略测试文件
+test.*
+*.test.*
+
+# 忽略 Microsoft Office 临时文件
+~$*
+
+# 忽略 Python 缓存文件
+__pycache__/
+
+# 忽略 jupyter notebook 的临时文件
+.ipynb_checkpoints/
+.virtual_documents/
