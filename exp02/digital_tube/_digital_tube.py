@@ -24,6 +24,7 @@ _Font: TypeAlias = Tuple[float, Literal["normal", "italic"]]
 _Path: TypeAlias = List[t.Vec2D]
 _RLevel: TypeAlias = Literal["digital", "line", "char", "path", None]
 
+
 DISPLAY_CH = set("0123456789abcdefABCDEF _")
 CTRL_CH = set(".pP")
 CTRL_CH_RESTR = "[.pP]"  # only for re.compile
@@ -123,13 +124,14 @@ NODES_SET = {
 
 
 class Mapper:
-    """ 映射器类 (字符级别). 传入当前字符的左下角坐标和字体大小, 构建一个映射器对象. """
+    """映射器类 (字符级别). 传入当前字符的左下角坐标和字体大小, 构建一个映射器对象."""
+
     def __init__(self, _start_pos: t.Vec2D, _fontsize: float = 72) -> None:
         self.start_pos = _start_pos
         self.fontsize = _fontsize
 
     def __call__(self, pos: t.Vec2D) -> t.Vec2D:
-        """ 映射器对象的调用方法. 传入字符集的相对坐标, 返回实际绘制的坐标. """
+        """映射器对象的调用方法. 传入字符集的相对坐标, 返回实际绘制的坐标."""
         return pos * self.fontsize + self.start_pos
 
 
@@ -139,7 +141,7 @@ def args_check(
     font_name: str,
     refresh_level: _RLevel,
 ) -> None:
-    """ 对最外层函数的四个关键参数进行合法性检查. """
+    """对最外层函数的四个关键参数进行合法性检查."""
     assert set(digitals) <= DISPLAY_CH | CTRL_CH | {"\n"}, "Invalid character in line"
     assert not re.search(
         f"^{CTRL_CH_RESTR}|{CTRL_CH_RESTR}{{2}}", digitals
@@ -156,12 +158,17 @@ def args_check(
 
 
 def len_line(line: str) -> int:
-    """ 计算一行中实际显示的字符数 (因小数点不占位). """
+    """计算一行中实际显示的字符数 (因小数点不占位)."""
     return len(re.sub(CTRL_CH_RESTR, "", line))
 
 
-def words_pos(pos: t.Vec2D, line: str, align: _Align, fontsize: float) -> List[t.Vec2D]:
-    """ 计算一行中每个字符的起笔位置. """
+def words_pos(
+    pos: t.Vec2D,
+    line: str,
+    align: _Align,
+    fontsize: float,
+) -> List[t.Vec2D]:
+    """计算一行中每个字符的起笔位置."""
     len_words = len_line(line)
     width = fontsize * 0.75
     if align == "left":
